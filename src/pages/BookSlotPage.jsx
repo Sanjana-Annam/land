@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../pages/bookingpages.css";
 
 const BookSlotPage = () => {
@@ -6,25 +7,40 @@ const BookSlotPage = () => {
   const [time, setTime] = useState("10:00 AM");
   const [mode, setMode] = useState("Call");
 
+  const navigate = useNavigate();
+
   const confirmBooking = async () => {
-    const formData = JSON.parse(localStorage.getItem("leadData"));
+    try {
+      const formData = JSON.parse(localStorage.getItem("leadData"));
 
-    const finalData = { ...formData, date, time, mode };
+      const finalData = { ...formData, date, time, mode };
 
-    await fetch("https://landbackend-q5xj.onrender.com/api/book-meeting", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(finalData),
-    });
+      const response = await fetch(
+        "https://landbackend-q5xj.onrender.com/api/book-meeting",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(finalData),
+        }
+      );
 
-    window.location.href = "/thank-you";
+      if (response.ok) {
+        // React Router navigation instead of window.location
+        navigate("/thank-you");
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+
+    } catch (error) {
+      console.log("Booking error:", error);
+      alert("Failed to book meeting");
+    }
   };
 
   return (
     <div className="booking-page-wrapper">
-
       <div className="booking-card">
 
         <h2>Select Your Preferred Slot</h2>
