@@ -11,7 +11,7 @@ const BookSlotPage = () => {
 
     const finalData = { ...formData, date, time, mode };
 
-    await fetch("http://localhost:5000/api/book-meeting", {
+    await fetch("https://landbackend-q5xj.onrender.com/api/book-meeting", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
