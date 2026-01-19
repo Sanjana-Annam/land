@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../pages/bookingpsages.css";
+import "../pages/bookingpages.css";
 
 const BookSlotPage = () => {
   const [date, setDate] = useState("");
