@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500&display=swap');
+
+/* ===== HERO SECTION ===== */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-top: 90px;
+
+  /* TEAL + WHITE CORPORATE THEME */
+  background: #F4F7FC; 
+
+  color: #ffffff;
+}
+
+.hero-inner {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 5rem);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+/* ===== LEFT CONTENT ===== */
+
+.hero-content h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  line-height: 1.15;
+  margin-bottom: 1.2rem;
+  color: #0f5c45;
+}
+
+.hero-content p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #0f5c45;
+  margin-bottom: 2rem;
+  max-width: 540px;
+}
+
+.hero-badge {
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+
+/* ===== PROOF ===== */
+
+.hero-proof {
+  display: flex;
+  gap: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.hero-proof strong {
+  font-size: 1.6rem;
+  color: #0f5c45;   /* soft teal accent */
+}
+
+.hero-proof span {
+  font-size: 0.85rem;
+  color: #e5e7eb;
+}
+
+/* ===== ACTIONS ===== */
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+  background: #ffffff;
+  color: #0f5c45;
+  padding: 14px 26px;
+  border-radius: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-secondary {
+  border: 1px solid #ffffff;
+  padding: 14px 26px;
+  border-radius: 14px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.trust-strip {
+  font-size: 0.9rem;
+  color: #0f5c45;
+}
+
+/* ===== MOBILE RESPONSIVENESS ===== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .hero-inner {
+    gap: 3rem;
+  }
+
+  .hero-content p {
+    max-width: 100%;
+  }
+}
+
+/* Mobile Devices – FORM FIRST LOGIC */
+@media (max-width: 768px) {
+
+  .hero {
+    padding: 90px 0;
+    min-height: auto;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 1.2rem;
+  }
+
+  /* FORM FIRST ON MOBILE */
+  .hero-inner > div:nth-child(1) {
+    order: 2;
+  }
+
+  .hero-inner > div:nth-child(2) {
+    order: 1;
+  }
+
+  .hero-content {
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .hero-proof {
+    justify-content: center;
+    gap: 1.2rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-proof {
+    flex-wrap: wrap;
+  }
+
+  .trust-strip {
+    font-size: 0.8rem;
+  }
+}

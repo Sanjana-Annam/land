@@ -1,0 +1,136 @@
+/* ===== HEADER BASE ===== */
+
+.site-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+
+  transition: all 0.3s ease;
+}
+
+/* Scroll Effect */
+
+.site-header.scrolled {
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== INNER LAYOUT ===== */
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px clamp(1.5rem, 5vw, 5rem);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===== LOGO AREA ===== */
+
+.logo-area {
+  display: flex;
+  align-items: center;
+}
+
+.logo-area img {
+  height: 62px;
+  width: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+/* Slightly smaller logo when scrolled */
+
+.site-header.scrolled .logo-area img {
+  height: 58px;
+}
+
+/* ===== NAVIGATION ===== */
+
+.header-nav {
+  display: flex;
+  gap: 1.8rem;
+  align-items: center;
+}
+
+.header-nav a {
+  text-decoration: none;
+  color: #1f2937;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+  letter-spacing: 0.02em;
+}
+
+.header-nav a:hover {
+  color: #0f5c45;
+}
+
+/* ===== CTA BUTTON ===== */
+
+.nav-cta {
+  background: #0f5c45;
+  color: #ffffff !important;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.nav-cta:hover {
+  background: #0c4d3a;
+  transform: translateY(-2px);
+}
+
+/* ===== MOBILE CTA (Visible Only on Mobile) ===== */
+
+.mobile-cta {
+  display: none;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablets */
+
+@media (max-width: 900px) {
+  .header-nav {
+    gap: 1.2rem;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+  .header-nav {
+    display: none;
+  }
+
+  .mobile-cta {
+    display: block;
+  }
+
+  .logo-area img {
+    height: 50px;
+  }
+
+  .header-inner {
+    padding: 8px 1.2rem;
+  }
+}
+
+/* Small Mobile */
+
+@media (max-width: 360px) {
+
+  .logo-area img {
+    height: 46px;
+  }
+}

@@ -1,0 +1,230 @@
+.process-section {
+  padding: 70px 6%;
+  background: #ffffff;
+}
+
+.process-title {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #0f172a;
+}
+
+.process-subtitle {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 50px auto;
+  color: #555;
+}
+
+/* ===== PROCESS WRAPPER ===== */
+
+.process-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ===== STEP ITEM ===== */
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  position: relative;
+  padding-bottom: 40px;
+
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeUp 0.7s forwards ease;
+}
+
+/* ===== NUMBER CIRCLE ===== */
+
+.step-circle {
+  width: 60px;
+  height: 60px;
+
+  background: #0f5c45;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-weight: 600;
+  font-size: 18px;
+
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== CONNECTING LINE (DESKTOP ONLY) ===== */
+
+.step-line {
+  position: absolute;
+  left: 29px;
+  top: 60px;
+
+  width: 2px;
+  height: calc(100% - 60px);
+
+  background: #0f5c45;
+}
+
+.step-line::after {
+  content: "↓";
+  position: absolute;
+  bottom: -12px;
+  left: -6px;
+  color: #0f5c45;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* ===== CONTENT CARD ===== */
+
+.step-content {
+  background: #f9fafb;
+  padding: 24px;
+  border-radius: 12px;
+  flex: 1;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.step-content:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.step-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  color: #0f172a;
+}
+
+.step-content p {
+  margin: 0;
+  color: #555;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+/* ===== LAST ITEM FIX ===== */
+
+.step-item:last-child {
+  padding-bottom: 0;
+}
+
+.step-item:last-child .step-line {
+  display: none;
+}
+
+/* ===== ANIMATION ===== */
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =============================== */
+/*        RESPONSIVE STYLES        */
+/* =============================== */
+
+/* Tablet adjustments */
+@media (max-width: 1024px) {
+  .process-wrapper {
+    max-width: 90%;
+  }
+
+  .process-title {
+    font-size: 32px;
+  }
+}
+
+/* MOBILE MODE – REMOVE TIMELINE COMPLETELY */
+@media (max-width: 768px) {
+
+  .process-section {
+    padding: 60px 5%;
+  }
+
+  .process-title {
+    font-size: 28px;
+  }
+
+  .process-subtitle {
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
+
+  .process-wrapper {
+    gap: 20px;
+  }
+
+  .step-item {
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 0;
+  }
+
+  /* REMOVE TIMELINE ELEMENTS ON MOBILE */
+  .step-line {
+    display: none;
+  }
+
+  .step-line::after {
+    display: none;
+  }
+
+  .step-circle {
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .step-content {
+    width: 100%;
+    padding: 18px;
+  }
+
+  .step-content h3 {
+    font-size: 18px;
+  }
+
+  .step-content p {
+    font-size: 14px;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+
+  .process-title {
+    font-size: 24px;
+  }
+
+  .process-subtitle {
+    font-size: 14px;
+  }
+
+  .step-circle {
+    width: 44px;
+    height: 44px;
+    font-size: 15px;
+  }
+
+  .step-content {
+    padding: 16px;
+  }
+}

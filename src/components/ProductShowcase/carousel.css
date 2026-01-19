@@ -1,0 +1,178 @@
+/* ===== SECTION BASE ===== */
+
+.carousel-section {
+  padding: 7rem 0;
+  background: #F4F7FC;        /* Neutral light background – NOT GREEN */
+  color: #1F2937;
+}
+
+/* ===== HEADER ===== */
+
+.carousel-header {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 3.5rem auto;
+  padding: 0 20px;
+}
+
+.section-badge {
+  display: inline-block;
+  background: #0f5c45;       /* Teal accent */
+  color: white;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.carousel-header h2 {
+  font-size: clamp(2rem, 2.8vw, 2.6rem);
+  margin-bottom: 10px;
+  color: #1F2937;
+}
+
+.carousel-header p {
+  color: #4B5563;
+}
+
+/* ===== SLIDER ===== */
+
+.carousel-wrapper {
+  overflow-x: auto;
+  padding: 20px;
+  scroll-behavior: smooth;
+}
+
+.carousel-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 24px;
+  padding: 20px;
+}
+
+/* ===== CATEGORY CARD ===== */
+
+.category-card {
+  min-width: 340px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+
+  border-radius: 22px;
+  padding: 18px;
+
+  transition: all 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-6px);
+  border-color: #0f5c45;      /* Teal hover instead of blue */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* MAIN IMAGE */
+
+.category-main img {
+  width: 100%;
+  height: 190px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+/* TITLE */
+
+.category-card h3 {
+  margin: 14px 0;
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
+  color: #1F2937;
+}
+
+/* SUB IMAGES */
+
+.mini-images {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.mini-box {
+  background: #f3f4f6;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mini-images img {
+  width: 100%;
+  height: 60px;
+  object-fit: cover;
+  transition: 0.2s ease;
+}
+
+.mini-images img:hover {
+  transform: scale(1.1);
+}
+
+/* LINK */
+
+.card-link {
+  display: inline-block;
+  margin-top: 12px;
+  color: #0f5c45;        /* Teal link */
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* CTA */
+
+.carousel-cta {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.explore-btn {
+  background: #ffffff;       /* White CTA */
+  color: #0f5c45;            /* Teal text */
+  border: 2px solid #0f5c45;
+
+  padding: 14px 30px;
+  border-radius: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.explore-btn:hover {
+  background: #0f5c45;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 768px) {
+
+  .carousel-section {
+    padding: 4.5rem 0;
+  }
+
+  .category-card {
+    min-width: 280px;
+  }
+
+  .category-main img {
+    height: 160px;
+  }
+
+  .mini-images img {
+    height: 50px;
+  }
+
+  .carousel-header h2 {
+    font-size: 1.8rem;
+  }
+}
