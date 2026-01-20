@@ -31,7 +31,7 @@ const BookSlotPage = () => {
       console.log("Sending to API:", finalData);
 
       const response = await fetch(
-        "http://localhost:5000/api/book-meeting",
+        "https://landbackend-q5xj.onrender.com/api/book-meeting",
         {
           method: "POST",
           headers: {
