@@ -1,31 +1,56 @@
-import emailjs from "@emailjs/browser";
-
-export const sendEmailsFromFrontend = async (data) => {
+const confirmBooking = async () => {
   try {
-    console.log("Calling EmailJS from frontend with data:", data);
+    setLoading(true);
 
-    // ADMIN EMAIL
-    await emailjs.send(
-      "service_01k2d2o",        // YOUR SERVICE ID
-      "template_nnxb0ho",       // ADMIN TEMPLATE ID
-      data,
-      "eoZBBNGfkfAbMYQ4F"       // YOUR PUBLIC KEY
-    );
+    const stored = localStorage.getItem("leadData");
 
-    console.log("Admin email request sent");
+    if (!stored) {
+      alert("Session expired. Please fill the form again.");
+      navigate("/");
+      return;
+    }
 
-    // CLIENT EMAIL
-    await emailjs.send(
-      "service_01k2d2o",        // SAME SERVICE ID
-      "template_t3ufns6",       // CLIENT TEMPLATE ID
-      data,
-      "eoZBBNGfkfAbMYQ4F"       // SAME PUBLIC KEY
-    );
+    const formData = JSON.parse(stored);
 
-    console.log("Client email request sent");
-    console.log("Emails sent successfully from frontend");
+    const finalData = {
+      ...formData,
+      date,
+      time,
+      mode,
+    };
+
+    console.log("Sending to API:", finalData);
+
+    // Call backend (sheet + whatsapp)
+    try {
+      await fetch(
+        "https://landbackend-q5xj.onrender.com/api/book-meeting",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(finalData),
+        }
+      );
+    } catch (apiError) {
+      console.log("API call failed but continuing:", apiError);
+    }
+
+    // Trigger emails in background – DO NOT AWAIT
+    try {
+      sendEmailsFromFrontend(finalData);
+    } catch (emailError) {
+      console.log("Email sending error:", emailError);
+    }
+
+    // Immediately redirect user
+    navigate("/thank-you");
 
   } catch (error) {
-    console.log("EmailJS frontend error:", error);
+    console.log("Booking error:", error);
+    navigate("/thank-you");
+  } finally {
+    setLoading(false);
   }
 };
