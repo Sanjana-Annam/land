@@ -18,7 +18,7 @@ const ThankYouPage = () => {
 
         <p>
           You will receive confirmation details on  
-          <strong> Email and WhatsApp shortly.</strong>
+          <strong> Email.</strong>
         </p>
 
         <a href="/" className="primary-btn">

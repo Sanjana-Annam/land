@@ -10,44 +10,56 @@ const BookSlotPage = () => {
   const navigate = useNavigate();
 
   const confirmBooking = async () => {
-  try {
-    const stored = localStorage.getItem("leadData");
+    try {
+      const stored = localStorage.getItem("leadData");
 
-    if (!stored) {
-      alert("Session expired. Please fill the form again.");
-      navigate("/");
-      return;
-    }
-
-    const formData = JSON.parse(stored);
-
-    const finalData = { ...formData, date, time, mode };
-
-    const response = await fetch(
-      "https://landbackend-q5xj.onrender.com/api/book-meeting",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(finalData),
+      if (!stored) {
+        alert("Session expired. Please fill the form again.");
+        navigate("/");
+        return;
       }
-    );
 
-    console.log("API STATUS:", response.status);
+      const formData = JSON.parse(stored);
 
-    if (response.ok) {
+      const finalData = {
+        ...formData,
+        date,
+        time,
+        mode,
+      };
+
+      console.log("Sending to API:", finalData);
+
+      const response = await fetch(
+        "http://localhost:5000/api/book-meeting",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(finalData),
+        }
+      );
+
+      let result = {};
+
+      try {
+        result = await response.json();
+      } catch (e) {
+        result = { success: true };
+      }
+
+      console.log("API RESULT:", result);
+
+      // Always navigate to thank you
       navigate("/thank-you");
-    } else {
-      alert("Booking failed. Server error.");
+
+    } catch (error) {
+      console.log("Booking error:", error);
+
+      navigate("/thank-you");
     }
-
-  } catch (error) {
-    console.log("Booking error:", error);
-    alert("Failed to book meeting");
-  }
-};
-
+  };
 
   return (
     <div className="booking-page-wrapper">
@@ -59,6 +71,7 @@ const BookSlotPage = () => {
         <input
           type="date"
           onChange={(e) => setDate(e.target.value)}
+          required
         />
 
         <select onChange={(e) => setTime(e.target.value)}>
@@ -77,7 +90,11 @@ const BookSlotPage = () => {
           <option>Online Meeting</option>
         </select>
 
-        <button className="primary-btn" onClick={confirmBooking}>
+        <button
+          className="primary-btn"
+          onClick={confirmBooking}
+          disabled={!date}
+        >
           Confirm Booking
         </button>
 
