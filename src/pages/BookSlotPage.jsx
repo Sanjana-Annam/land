@@ -10,34 +10,44 @@ const BookSlotPage = () => {
   const navigate = useNavigate();
 
   const confirmBooking = async () => {
-    try {
-      const formData = JSON.parse(localStorage.getItem("leadData"));
+  try {
+    const stored = localStorage.getItem("leadData");
 
-      const finalData = { ...formData, date, time, mode };
-
-      const response = await fetch(
-        "https://landbackend-q5xj.onrender.com/api/book-meeting",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(finalData),
-        }
-      );
-
-      if (response.ok) {
-        // React Router navigation instead of window.location
-        navigate("/thank-you");
-      } else {
-        alert("Something went wrong. Please try again.");
-      }
-
-    } catch (error) {
-      console.log("Booking error:", error);
-      alert("Failed to book meeting");
+    if (!stored) {
+      alert("Session expired. Please fill the form again.");
+      navigate("/");
+      return;
     }
-  };
+
+    const formData = JSON.parse(stored);
+
+    const finalData = { ...formData, date, time, mode };
+
+    const response = await fetch(
+      "https://landbackend-q5xj.onrender.com/api/book-meeting",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(finalData),
+      }
+    );
+
+    console.log("API STATUS:", response.status);
+
+    if (response.ok) {
+      navigate("/thank-you");
+    } else {
+      alert("Booking failed. Server error.");
+    }
+
+  } catch (error) {
+    console.log("Booking error:", error);
+    alert("Failed to book meeting");
+  }
+};
+
 
   return (
     <div className="booking-page-wrapper">
