@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../pages/bookingpages.css";
 
-// Correct explicit path with extension
-import { sendEmailsFromFrontend } from "../utils/emailService.js";
+// Correct import matching the export
+import { sendEmails } from "../utils/emailService";
 
 const BookSlotPage = () => {
   const [date, setDate] = useState("");
@@ -36,7 +36,7 @@ const BookSlotPage = () => {
 
       console.log("Sending to API:", finalData);
 
-      // Call backend only for Google Sheet + WhatsApp
+      // Call backend (Google Sheet + WhatsApp only)
       try {
         await fetch(
           "https://landbackend-q5xj.onrender.com/api/book-meeting",
@@ -52,10 +52,10 @@ const BookSlotPage = () => {
         console.log("API call failed but continuing:", apiError);
       }
 
-      // Trigger emails in background (do NOT await)
+      // Trigger emails from frontend (do NOT await)
       try {
-        console.log("Triggering EmailJS from frontend...");
-        sendEmailsFromFrontend(finalData);
+        console.log("Triggering EmailJS...");
+        sendEmails(finalData);
       } catch (emailError) {
         console.log("Email sending error:", emailError);
       }
