@@ -10,27 +10,28 @@ const BookSlotPage = () => {
   const navigate = useNavigate();
 
   const confirmBooking = async () => {
+  try {
+    const stored = localStorage.getItem("leadData");
+
+    if (!stored) {
+      alert("Session expired. Please fill the form again.");
+      navigate("/");
+      return;
+    }
+
+    const formData = JSON.parse(stored);
+
+    const finalData = {
+      ...formData,
+      date,
+      time,
+      mode,
+    };
+
+    console.log("Sending to API:", finalData);
+
     try {
-      const stored = localStorage.getItem("leadData");
-
-      if (!stored) {
-        alert("Session expired. Please fill the form again.");
-        navigate("/");
-        return;
-      }
-
-      const formData = JSON.parse(stored);
-
-      const finalData = {
-        ...formData,
-        date,
-        time,
-        mode,
-      };
-
-      console.log("Sending to API:", finalData);
-
-      const response = await fetch(
+      await fetch(
         "https://landbackend-q5xj.onrender.com/api/book-meeting",
         {
           method: "POST",
@@ -40,26 +41,19 @@ const BookSlotPage = () => {
           body: JSON.stringify(finalData),
         }
       );
-
-      let result = {};
-
-      try {
-        result = await response.json();
-      } catch (e) {
-        result = { success: true };
-      }
-
-      console.log("API RESULT:", result);
-
-      // Always navigate to thank you
-      navigate("/thank-you");
-
-    } catch (error) {
-      console.log("Booking error:", error);
-
-      navigate("/thank-you");
+    } catch (apiError) {
+      console.log("API call failed but continuing:", apiError);
     }
-  };
+
+    // ALWAYS redirect, independent of API response
+    navigate("/thank-you");
+
+  } catch (error) {
+    console.log("Booking error:", error);
+    navigate("/thank-you");
+  }
+};
+
 
   return (
     <div className="booking-page-wrapper">
