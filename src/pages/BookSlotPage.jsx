@@ -1,59 +1,68 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../pages/bookingpages.css";
+import { sendEmailsFromFrontend } from "../utils/emailService";
 
 const BookSlotPage = () => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("10:00 AM");
   const [mode, setMode] = useState("Call");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const confirmBooking = async () => {
-  try {
-    const stored = localStorage.getItem("leadData");
-
-    if (!stored) {
-      alert("Session expired. Please fill the form again.");
-      navigate("/");
-      return;
-    }
-
-    const formData = JSON.parse(stored);
-
-    const finalData = {
-      ...formData,
-      date,
-      time,
-      mode,
-    };
-
-    console.log("Sending to API:", finalData);
-
     try {
-      await fetch(
-        "https://landbackend-q5xj.onrender.com/api/book-meeting",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(finalData),
-        }
-      );
-    } catch (apiError) {
-      console.log("API call failed but continuing:", apiError);
+      setLoading(true);
+
+      const stored = localStorage.getItem("leadData");
+
+      if (!stored) {
+        alert("Session expired. Please fill the form again.");
+        navigate("/");
+        return;
+      }
+
+      const formData = JSON.parse(stored);
+
+      const finalData = {
+        ...formData,
+        date,
+        time,
+        mode,
+      };
+
+      console.log("Sending to API:", finalData);
+
+      // Call backend only for sheet + whatsapp
+      try {
+        await fetch(
+          "https://landbackend-q5xj.onrender.com/api/book-meeting",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(finalData),
+          }
+        );
+      } catch (apiError) {
+        console.log("API call failed but continuing:", apiError);
+      }
+
+      // Send Emails from FRONTEND directly
+      await sendEmailsFromFrontend(finalData);
+
+      // Always redirect to thank you
+      navigate("/thank-you");
+
+    } catch (error) {
+      console.log("Booking error:", error);
+      navigate("/thank-you");
+    } finally {
+      setLoading(false);
     }
-
-    // ALWAYS redirect, independent of API response
-    navigate("/thank-you");
-
-  } catch (error) {
-    console.log("Booking error:", error);
-    navigate("/thank-you");
-  }
-};
-
+  };
 
   return (
     <div className="booking-page-wrapper">
@@ -87,9 +96,9 @@ const BookSlotPage = () => {
         <button
           className="primary-btn"
           onClick={confirmBooking}
-          disabled={!date}
+          disabled={!date || loading}
         >
-          Confirm Booking
+          {loading ? "Processing..." : "Confirm Booking"}
         </button>
 
         <a href="/" className="secondary-link">
